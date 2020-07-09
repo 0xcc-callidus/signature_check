@@ -81,8 +81,7 @@ void checkCodeSignature(void *binaryContent){
             const CS_CodeDirectory *codeDirectory = (const CS_CodeDirectory *)((char *)codeEmbedded + ntohl(curIndex.offset));
 
             size_t pageSize = codeDirectory->pageSize ? (1 << codeDirectory->pageSize) : 0; 
-            // ?1을 천번 shift? why? 이부분 오류 같음.. 아마 0x1000 쓰인 그대로가 맞을듯.. 0이면 애기는 다르고.. >> nop 이게 맞았음.. 
-            // 근데 왜 이게 맞는건지.. 까먹었네..;; 할튼 1000% 이게 맞았는데.. 
+            // 이거 pageSize 계산은 위에것이 맞음, pageSize는 보통 0x0C값이고, 1bit를 12만큼 쉬프트 하면, hex 0x1000값이 됨.
             // https://opensource.apple.com/source/libsecurity_codesigning/libsecurity_codesigning-55032/lib/StaticCode.cpp
             //https://opensource.apple.com/source/libsecurity_codesigning/libsecurity_codesigning-55032/lib/codedirectory.cpp.auto.html
 
